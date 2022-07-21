@@ -1,12 +1,9 @@
-import { StatusBar } from "expo-status-bar";
 import { useRef } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Animated,
   Image,
-  FlatList,
   Dimensions,
   ListRenderItem,
   ImageSourcePropType,
@@ -14,8 +11,8 @@ import {
 
 const { width } = Dimensions.get("window");
 
-const IMAGE_WIDTH = width * 0.7;
-const IMAGE_HEIGHT = IMAGE_WIDTH * 1.54;
+const IMAGE_WIDTH = width * 0.75;
+const IMAGE_HEIGHT = IMAGE_WIDTH * 1.7;
 
 const cruiser = require("../assets/cruiser.png");
 const prado = require("../assets/prado.png");
@@ -45,7 +42,7 @@ export function CarouselTransition() {
 
     const translateY = scrollX.interpolate({
       inputRange,
-      outputRange: [0, -30, 0],
+      outputRange: [0, -20, 0],
     });
 
     const scale = scrollX.interpolate({
@@ -74,32 +71,34 @@ export function CarouselTransition() {
     );
   };
 
+  const renderBackgroundImage = (image: string, index: number) => {
+    const inputRange = [
+      (index - 1) * width,
+      index * width,
+      (index + 1) * width,
+    ];
+
+    const opacity = scrollX.interpolate({
+      inputRange,
+      outputRange: [0.1, 1, 0.1],
+    });
+
+    return (
+      <Animated.Image
+        source={{
+          uri: image,
+        }}
+        key={image}
+        style={[StyleSheet.absoluteFillObject, { opacity }]}
+        blurRadius={4}
+      />
+    );
+  };
+
   return (
     <>
       <View style={StyleSheet.absoluteFillObject}>
-        {BACKGROUNDS.map((image, index) => {
-          const inputRange = [
-            (index - 1) * width,
-            index * width,
-            (index + 1) * width,
-          ];
-
-          const opacity = scrollX.interpolate({
-            inputRange,
-            outputRange: [0.1, 1, 0.1],
-          });
-
-          return (
-            <Animated.Image
-              source={{
-                uri: image,
-              }}
-              key={image}
-              style={[StyleSheet.absoluteFillObject, { opacity }]}
-              blurRadius={4}
-            />
-          );
-        })}
+        {BACKGROUNDS.map(renderBackgroundImage)}
       </View>
       <Animated.FlatList
         data={DATA}
@@ -116,12 +115,3 @@ export function CarouselTransition() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
