@@ -1,23 +1,15 @@
 import { useRef } from "react";
-import {
-  StyleSheet,
-  View,
-  Animated,
-  Image,
-  Dimensions,
-  ListRenderItem,
-  ImageSourcePropType,
-} from "react-native";
+import { StyleSheet, View, Animated, Image, Dimensions, ListRenderItem, ImageSourcePropType } from "react-native";
 
 const { width } = Dimensions.get("window");
 
 const IMAGE_WIDTH = width * 0.75;
 const IMAGE_HEIGHT = IMAGE_WIDTH * 1.7;
 
-const cruiser = require("../assets/cruiser.png");
-const prado = require("../assets/prado.png");
-const hilux = require("../assets/hilux.png");
-const fortuner = require("../assets/fortuner.png");
+const cruiser = require("../assets/carousel/cruiser.png");
+const prado = require("../assets/carousel/prado.png");
+const hilux = require("../assets/carousel/hilux.png");
+const fortuner = require("../assets/carousel/fortuner.png");
 
 const DATA = [cruiser, hilux, fortuner];
 
@@ -34,11 +26,7 @@ export function CarouselTransition() {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const renderItem: ListRenderItem<string> = ({ item, index }) => {
-    const inputRange = [
-      (index - 1) * width,
-      index * width,
-      (index + 1) * width,
-    ];
+    const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
 
     const translateY = scrollX.interpolate({
       inputRange,
@@ -72,11 +60,7 @@ export function CarouselTransition() {
   };
 
   const renderBackgroundImage = (image: string, index: number) => {
-    const inputRange = [
-      (index - 1) * width,
-      index * width,
-      (index + 1) * width,
-    ];
+    const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
 
     const opacity = scrollX.interpolate({
       inputRange,
@@ -97,9 +81,7 @@ export function CarouselTransition() {
 
   return (
     <>
-      <View style={StyleSheet.absoluteFillObject}>
-        {BACKGROUNDS.map(renderBackgroundImage)}
-      </View>
+      <View style={StyleSheet.absoluteFillObject}>{BACKGROUNDS.map(renderBackgroundImage)}</View>
       <Animated.FlatList
         data={DATA}
         renderItem={renderItem}
@@ -107,10 +89,7 @@ export function CarouselTransition() {
         pagingEnabled={true}
         horizontal
         keyExtractor={keyExtractor}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: true }
-        )}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: true })}
       />
     </>
   );
