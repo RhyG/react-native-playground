@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { CarouselTransition } from "./experiments/CarouselTransition";
-import { SharedAnimationNavigator } from "./experiments/shared-animation/SharedAnimation";
+import { SharedAnimationNavigator } from "./experiments/shared-animation/SharedElementNavigation";
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }) => {
         <Text>Carousel transition</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("SharedAnimation")}>
-        <Text>Shared animations</Text>
+        <Text>Shared element transitions</Text>
       </TouchableOpacity>
     </View>
   );
