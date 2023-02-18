@@ -199,9 +199,9 @@ const animation = {
   1: { opacity: 1, translateY: 0 },
 };
 
-const createAnimation = (from) => ({
-  0: { translateY: -100, translateX: from },
-  1: { translateY: 0, translateX: 0 },
+const createAnimation = (from: number) => ({
+  0: { translateY: -100, translateX: from, opacity: 0 },
+  1: { translateY: 0, translateX: 0, opacity: 1 },
 });
 
 const animations = [createAnimation(100), createAnimation(0), createAnimation(-100)];
