@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -8,11 +8,17 @@ import { SharedAnimationNavigator } from "./experiments/shared-animation/SharedE
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <TouchableOpacity onPress={() => navigation.navigate("CarouselTransition")}>
-        <Text>Carousel transition</Text>
+      <TouchableOpacity
+        style={[styles.navigationButton, { backgroundColor: "#F9A38A" }]}
+        onPress={() => navigation.navigate("CarouselTransition")}
+      >
+        <Text style={styles.buttonText}>CAROUSEL TRANSITION</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("SharedAnimation")}>
-        <Text>Shared element transitions</Text>
+      <TouchableOpacity
+        style={[styles.navigationButton, { backgroundColor: "#B6C1D1" }]}
+        onPress={() => navigation.navigate("SharedAnimation")}
+      >
+        <Text style={styles.buttonText}>SHARED ELEMENT TRANSITIONS</Text>
       </TouchableOpacity>
     </View>
   );
@@ -31,3 +37,15 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  navigationButton: {
+    padding: 20,
+    width: "80%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    borderRadius: 12,
+  },
+  buttonText: { color: "white", fontWeight: "600" },
+});
